@@ -5,6 +5,17 @@ All notable changes to this grammar.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- An arrow-bodied `function_expression` no longer takes postfix selectors.
+  `(x) => a.b()` parsed as `((x) => a).b()`, so the call landed outside the
+  lambda. The arrow body now extends as far right as possible, as in Dart.
+  Arrow literals remain valid operands (`a ?? () => b`); block-bodied literals
+  are still primaries, so `() { ... }()` and `(e) { ... }.toJS` are unchanged.
+  Node names and fields are unchanged; only nesting differs.
+
 ## [0.2.0] - 2026-04-26
 
 Major AST shape changes for downstream tools. 
